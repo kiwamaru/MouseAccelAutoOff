@@ -1,0 +1,2 @@
+# MouseAccelAutoOff
+MouseAccelAutoOff
