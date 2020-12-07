@@ -1,2 +1,9 @@
 # MouseAccelAutoOff
 MouseAccelAutoOff
+
+
+FPS等で、いちいちマウスの加速(ポインターの精度を高める)をオフにするのが面倒な時に利用するソフト。
+
+タスクトレイに常駐し、5秒毎にプロセスをチェックし、特定のプロセスが起動していたら、マウスの加速をオフにするだけの内容。
+
+設定はexeと同ディレクトリにあるMonitoringProcessNames.xmlにて行う
