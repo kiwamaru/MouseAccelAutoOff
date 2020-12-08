@@ -20,9 +20,8 @@ namespace MouseAccelAutoOffMonitor
         {
             base.OnStartup(e);
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            _processesMonitoring = new ProcessesMonitoring();
+            _processesMonitoring = new ProcessesMonitoring(notifyIcon);
             _processesMonitoring.Start();
-
         }
 
         protected override void OnExit(ExitEventArgs e)

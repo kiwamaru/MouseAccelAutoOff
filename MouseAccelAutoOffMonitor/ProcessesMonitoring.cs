@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MouseAccelAutoOffMonitor.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,10 +12,14 @@ namespace MouseAccelAutoOffMonitor
     public class ProcessesMonitoring
     {
         private List<string> _processNames;
-
+        private NotifyIcon _notifyIcon;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _task;
 
+        public ProcessesMonitoring(NotifyIcon notifyIcon)
+        {
+            _notifyIcon = notifyIcon;
+        }
         public void Start()
         {
             _processNames = LoadSettings.LoadMonitoringProcessNames();
@@ -61,6 +66,7 @@ namespace MouseAccelAutoOffMonitor
                 {
                     MouseSettingApi.ToggleEnhancePointerPrecision(current);
                     last = current;
+                    _notifyIcon.ChangeNotifyIcon(current);
                 }
                 cancellationToken.WaitHandle.WaitOne(5000);
             }

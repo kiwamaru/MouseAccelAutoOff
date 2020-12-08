@@ -7,6 +7,7 @@ namespace MouseAccelAutoOffMonitor
         /// 必要なデザイナー変数です。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(NotifyIcon));
 
         /// <summary> 
         /// 使用中のリソースをすべてクリーンアップします。
@@ -54,7 +55,7 @@ namespace MouseAccelAutoOffMonitor
             // 
             this.MouseAccelAutoOffMonitor.ContextMenuStrip = this.contextMenuStrip;
             this.MouseAccelAutoOffMonitor.Icon = ((System.Drawing.Icon)(resources.GetObject("MouseAccelAutoOffMonitor.Icon")));
-            this.MouseAccelAutoOffMonitor.Text = "notifyIcon1";
+            this.MouseAccelAutoOffMonitor.Text = "Accel On";
             this.MouseAccelAutoOffMonitor.Visible = true;
             this.MouseAccelAutoOffMonitor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             this.contextMenuStrip.ResumeLayout(false);
@@ -66,5 +67,6 @@ namespace MouseAccelAutoOffMonitor
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.NotifyIcon MouseAccelAutoOffMonitor;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExitApp;
+
     }
 }

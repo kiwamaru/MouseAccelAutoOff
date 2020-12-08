@@ -73,9 +73,9 @@ namespace MouseAccelAutoOffMonitor.Properties {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Icon NotifyAccelOff {
+        internal static System.Drawing.Icon NotifyAccelOn {
             get {
-                object obj = ResourceManager.GetObject("NotifyAccelOff", resourceCulture);
+                object obj = ResourceManager.GetObject("NotifyAccelOn", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

@@ -121,7 +121,7 @@
   <data name="Notify" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\notify.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="NotifyAccelOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NotifyAccelOff.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="NotifyAccelOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\notifyaccelon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
