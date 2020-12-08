@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MouseAccelAutoOffMonitor
+namespace MouseAccelAutoOffMonitor.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProcessNameListDialog : UserControl
     {
-        public MainWindow()
+        public ProcessNameListDialog()
         {
             InitializeComponent();
         }

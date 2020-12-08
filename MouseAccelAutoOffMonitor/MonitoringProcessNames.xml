@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<MonitoringProcesses>
-    <MonitoringProcess>
-        <Name>notepad</Name>
-    </MonitoringProcess>
-</MonitoringProcesses>
+<MonitoringProcessTable>
+  <MonitoringProcess>
+    <Name>notepad</Name>
+  </MonitoringProcess>
+  <MonitoringProcess>
+    <Name>firefox</Name>
+  </MonitoringProcess>
+</MonitoringProcessTable>

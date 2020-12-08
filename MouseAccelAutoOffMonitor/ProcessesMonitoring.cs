@@ -15,21 +15,30 @@ namespace MouseAccelAutoOffMonitor
         private NotifyIcon _notifyIcon;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _task;
+        private ProcessNameListContainer _processNameListContainer;
+
 
         public ProcessesMonitoring(NotifyIcon notifyIcon)
         {
             _notifyIcon = notifyIcon;
+            _processNameListContainer = new ProcessNameListContainer();
         }
         public void Start()
         {
-            _processNames = LoadSettings.LoadMonitoringProcessNames();
+            _processNameListContainer.LoadFile();
+            _processNames = _processNameListContainer.GetProcessNameList();
             _task = Task.Run(() => Wait());
         }
+        public void Stop()
+        {
+            _cancellationTokenSource.Cancel(true);
+        }
+
         public void ExitWait()
         {
             _task.Wait();
         }
-        public async void Wait()
+        private async void Wait()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             try
@@ -42,14 +51,11 @@ namespace MouseAccelAutoOffMonitor
             }
             _cancellationTokenSource = null;
         }
-        public void Stop()
-        {
-            _cancellationTokenSource.Cancel(true);
-        }
-        public async Task ExecuteMonitoring(CancellationToken cancellationToken)
+        private async Task ExecuteMonitoring(CancellationToken cancellationToken)
         {
             bool current = MouseSettingApi.GetMouseAccelaration();
             bool last = current;
+            _notifyIcon.ChangeNotifyIcon(current);
 
             while (true) 
             {

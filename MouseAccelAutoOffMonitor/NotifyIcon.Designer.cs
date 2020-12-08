@@ -34,24 +34,38 @@ namespace MouseAccelAutoOffMonitor
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotifyIcon));
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemExitApp = new System.Windows.Forms.ToolStripMenuItem();
-            this.MouseAccelAutoOffMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolStripMenuItemStartUpRegistration = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegistrationProcess = new System.Windows.Forms.ToolStripMenuItem();
+            this.MouseAccelAutoOffMonitor = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip.SuspendLayout();
             // 
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemExitApp,
-            this.toolStripMenuItemStartUpRegistration});
+            this.toolStripMenuItemRegistrationProcess,
+            this.toolStripMenuItemStartUpRegistration,
+            this.toolStripMenuItemExitApp});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(168, 48);
+            this.contextMenuStrip.Size = new System.Drawing.Size(170, 70);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // toolStripMenuItemExitApp
             // 
             this.toolStripMenuItemExitApp.Name = "toolStripMenuItemExitApp";
-            this.toolStripMenuItemExitApp.Size = new System.Drawing.Size(167, 22);
+            this.toolStripMenuItemExitApp.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItemExitApp.Text = "終了";
+            // 
+            // toolStripMenuItemStartUpRegistration
+            // 
+            this.toolStripMenuItemStartUpRegistration.Name = "toolStripMenuItemStartUpRegistration";
+            this.toolStripMenuItemStartUpRegistration.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItemStartUpRegistration.Text = "スタートアップに登録";
+            // 
+            // toolStripMenuItemRegistrationProcess
+            // 
+            this.toolStripMenuItemRegistrationProcess.Name = "toolStripMenuItemRegistrationProcess";
+            this.toolStripMenuItemRegistrationProcess.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItemRegistrationProcess.Text = "監視プロセスの登録";
             // 
             // MouseAccelAutoOffMonitor
             // 
@@ -60,12 +74,6 @@ namespace MouseAccelAutoOffMonitor
             this.MouseAccelAutoOffMonitor.Text = "Accel On";
             this.MouseAccelAutoOffMonitor.Visible = true;
             this.MouseAccelAutoOffMonitor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
-            // 
-            // toolStripMenuItemStartUpRegistration
-            // 
-            this.toolStripMenuItemStartUpRegistration.Name = "toolStripMenuItemStartUpRegistration";
-            this.toolStripMenuItemStartUpRegistration.Size = new System.Drawing.Size(167, 22);
-            this.toolStripMenuItemStartUpRegistration.Text = "スタートアップに登録";
             this.contextMenuStrip.ResumeLayout(false);
 
         }
@@ -76,5 +84,6 @@ namespace MouseAccelAutoOffMonitor
         private System.Windows.Forms.NotifyIcon MouseAccelAutoOffMonitor;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExitApp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartUpRegistration;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRegistrationProcess;
     }
 }

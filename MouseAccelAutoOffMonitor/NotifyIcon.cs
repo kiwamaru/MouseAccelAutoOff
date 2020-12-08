@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MouseAccelAutoOffMonitor.ViewModels;
+using Prism.Services.Dialogs;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -20,8 +22,14 @@ namespace MouseAccelAutoOffMonitor
                 Application.Current.Shutdown();
             };
             toolStripMenuItemStartUpRegistration.Click += ToolStripMenuItemStartUpRegistration_Click;
-
             toolStripMenuItemStartUpRegistration.Checked = StartUpRegistration.IsRegistrated();
+            toolStripMenuItemRegistrationProcess.Click += ToolStripMenuItemRegistrationProcess_Click;
+        }
+
+        private void ToolStripMenuItemRegistrationProcess_Click(object sender, EventArgs e)
+        {
+            //_dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
+            MainWindowViewModel.ViewModel.showSettingDialogCommand.Execute();
         }
 
         private void ToolStripMenuItemStartUpRegistration_Click(object sender, EventArgs e)
@@ -47,6 +55,7 @@ namespace MouseAccelAutoOffMonitor
 
         private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
+
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
