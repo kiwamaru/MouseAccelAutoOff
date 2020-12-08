@@ -19,6 +19,23 @@ namespace MouseAccelAutoOffMonitor
             {
                 Application.Current.Shutdown();
             };
+            toolStripMenuItemStartUpRegistration.Click += ToolStripMenuItemStartUpRegistration_Click;
+
+            toolStripMenuItemStartUpRegistration.Checked = StartUpRegistration.IsRegistrated();
+        }
+
+        private void ToolStripMenuItemStartUpRegistration_Click(object sender, EventArgs e)
+        {
+            if (toolStripMenuItemStartUpRegistration.Checked)
+            {
+                toolStripMenuItemStartUpRegistration.Checked = false;
+                StartUpRegistration.Remove();
+            }
+            else 
+            {
+                toolStripMenuItemStartUpRegistration.Checked = true;
+                StartUpRegistration.Registration();
+            }
         }
 
         public NotifyIcon(IContainer container)
