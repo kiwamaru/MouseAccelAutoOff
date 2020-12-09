@@ -155,9 +155,6 @@
     <Resource Include="Resources\Notify.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MonitoringProcessNames.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="NotifyAccelOn.ico" />
     <Resource Include="Notify.ico" />
     <Resource Include="Resources\NotifyAccelOn.ico" />

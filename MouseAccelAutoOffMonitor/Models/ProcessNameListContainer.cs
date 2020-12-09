@@ -38,6 +38,10 @@ namespace MouseAccelAutoOffMonitor
             {
                 return null;
             }
+            catch (System.IO.IOException)
+            {
+                return null;
+            }
             return _processNameList;
         }
 
