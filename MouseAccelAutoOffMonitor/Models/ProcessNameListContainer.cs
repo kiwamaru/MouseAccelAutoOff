@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace MouseAccelAutoOffMonitor
 {
+    /// <summary>
+    /// プロセス名を管理するコンテナ
+    /// </summary>
     public class ProcessNameListContainer
     {
-        static string filepath = @"MonitoringProcessNames.xml";
+        private static string filepath = @"MonitoringProcessNames.xml";
 
         private List<string> _processNameList;
 
-        public void LoadFile()
+        /// <summary>
+        /// XMLファイルからプロセス名リストを取得
+        /// </summary>
+        public List<string> GetProcessNameList()
         {
-            if(_processNameList == null)
+            if (_processNameList == null)
             {
                 _processNameList = new List<string>();
             }
@@ -33,22 +34,28 @@ namespace MouseAccelAutoOffMonitor
                     _processNameList.Add(p.Element("Name").Value);
                 }
             }
-            catch (XmlException e) 
+            catch (XmlException e)
             {
-                return;
+                return null;
             }
-        }
-        public List<string> GetProcessNameList()
-        {
             return _processNameList;
         }
+
+        /// <summary>
+        /// プロセス名リストを登録し、ファイルに書き込む
+        /// </summary>
+        /// <param name="processNameList"></param>
         public void SetProcessNameList(List<string> processNameList)
-        { 
+        {
             _processNameList.Clear();
             _processNameList.AddRange(processNameList);
             WriteFile();
         }
-        public void WriteFile()
+
+        /// <summary>
+        /// プロセス名リストをファイルに書き込む
+        /// </summary>
+        private void WriteFile()
         {
             Debug.Assert(_processNameList != null);
 

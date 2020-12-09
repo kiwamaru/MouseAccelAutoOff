@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MouseAccelAutoOffMonitor
@@ -22,6 +17,7 @@ namespace MouseAccelAutoOffMonitor
             regkey.SetValue(Application.ProductName, Application.ExecutablePath);
             regkey.Close();
         }
+
         /// <summary>
         /// スタートアップから削除
         /// </summary>
@@ -31,6 +27,7 @@ namespace MouseAccelAutoOffMonitor
             regkey.DeleteValue(Application.ProductName);
             regkey.Close();
         }
+
         /// <summary>
         /// スタートアップに登録済みか
         /// </summary>

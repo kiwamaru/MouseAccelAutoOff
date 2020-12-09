@@ -57,7 +57,6 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             CancelCommand = new DelegateCommand(DeleteProcessName);
 
             _processNameListContainer = new ProcessNameListContainer();
-            _processNameListContainer.LoadFile();
             var pnames = _processNameListContainer.GetProcessNameList();
             if (pnames != null && pnames.Any())
             {
@@ -80,6 +79,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
                 }
             }
         }
+
         /// <summary>
         /// プロセス名を削除
         /// </summary>
@@ -90,7 +90,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
                 ProcessList.Remove(SelectProcessName);
             }
         }
-        
+
         public void OnOK()
         {
             _processNameListContainer.SetProcessNameList(ProcessList.ToList());
@@ -118,6 +118,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             //監視スレッド停止
             MainWindowViewModel.ViewModel.PauseProcessesMonitoringCommand.Execute();
         }
+
         /// <summary>
         /// コモンファイルダイアログにてプロセス名を選択する
         /// </summary>

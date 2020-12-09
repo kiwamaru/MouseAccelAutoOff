@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace MouseAccelAutoOffMonitor
 {
@@ -9,6 +7,7 @@ namespace MouseAccelAutoOffMonitor
     {
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo", SetLastError = true)]
         public static extern bool SystemParametersInfoGet(uint action, uint param, IntPtr vparam, SPIF fWinIni);
+
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo", SetLastError = true)]
         public static extern bool SystemParametersInfoSet(uint action, uint param, IntPtr vparam, SPIF fWinIni);
 
@@ -18,13 +17,17 @@ namespace MouseAccelAutoOffMonitor
         public enum SPIF
         {
             None = 0x00,
+
             /// <summary>Writes the new system-wide parameter setting to the user profile.</summary>
             UPDATEINIFILE = 0x01,
+
             /// <summary>Broadcasts the WM_SETTINGCHANGE message after updating the user profile.</summary>
             SENDCHANGE = 0x02,
+
             /// <summary>Same as SPIF_SENDCHANGE.</summary>
             SENDWININICHANGE = 0x02
         }
+
         /// <summary>
         /// "ポインターの精度を高める"の設定取得
         /// </summary>
@@ -35,6 +38,7 @@ namespace MouseAccelAutoOffMonitor
             SystemParametersInfoGet(SPI_GETMOUSE, 0, GCHandle.Alloc(mouseParams, GCHandleType.Pinned).AddrOfPinnedObject(), 0);
             return mouseParams[2] == 1;
         }
+
         /// <summary>
         /// "ポインターの精度を高める"を設定する
         /// </summary>
@@ -50,6 +54,5 @@ namespace MouseAccelAutoOffMonitor
             // Update the system setting.
             return SystemParametersInfoSet(SPI_SETMOUSE, 0, GCHandle.Alloc(mouseParams, GCHandleType.Pinned).AddrOfPinnedObject(), SPIF.SENDCHANGE);
         }
-
     }
 }

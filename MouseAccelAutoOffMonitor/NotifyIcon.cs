@@ -1,15 +1,14 @@
 ﻿using MouseAccelAutoOffMonitor.ViewModels;
-using Prism.Services.Dialogs;
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 
 namespace MouseAccelAutoOffMonitor
 {
     public partial class NotifyIcon : Component
     {
-        System.Drawing.Icon _accelofficon;
+        private System.Drawing.Icon _accelofficon;
+
         public NotifyIcon()
         {
             InitializeComponent();
@@ -28,7 +27,6 @@ namespace MouseAccelAutoOffMonitor
 
         private void ToolStripMenuItemRegistrationProcess_Click(object sender, EventArgs e)
         {
-            //_dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
             MainWindowViewModel.ViewModel.showSettingDialogCommand.Execute();
         }
 
@@ -39,7 +37,7 @@ namespace MouseAccelAutoOffMonitor
                 toolStripMenuItemStartUpRegistration.Checked = false;
                 StartUpRegistration.Remove();
             }
-            else 
+            else
             {
                 toolStripMenuItemStartUpRegistration.Checked = true;
                 StartUpRegistration.Registration();
@@ -55,26 +53,24 @@ namespace MouseAccelAutoOffMonitor
 
         private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-
         }
+
         public void ChangeNotifyIcon(bool accel_on)
         {
-            if (accel_on) 
-            { 
+            if (accel_on)
+            {
                 MouseAccelAutoOffMonitor.Icon = ((System.Drawing.Icon)(_resources.GetObject("MouseAccelAutoOffMonitor.Icon")));
-                MouseAccelAutoOffMonitor.Text = "Accel On";
+                MouseAccelAutoOffMonitor.Text = "ポインターの精度を高める On";
             }
-            else 
-            { 
+            else
+            {
                 MouseAccelAutoOffMonitor.Icon = _accelofficon;
-                MouseAccelAutoOffMonitor.Text = "Accel Off";
+                MouseAccelAutoOffMonitor.Text = "ポインターの精度を高める Off";
             }
         }
-
     }
 }

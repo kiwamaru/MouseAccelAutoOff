@@ -1,11 +1,5 @@
 ﻿using Prism.Commands;
 using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace MouseAccelAutoOffMonitor.ViewModels
 {
@@ -25,18 +19,17 @@ namespace MouseAccelAutoOffMonitor.ViewModels
         private IDialogService _dialogService;
         private ProcessesMonitoring _processesMonitoring;
 
-
-        public MainWindowViewModel(IDialogService dialogService,NotifyIcon notifyIcon)
+        public MainWindowViewModel(IDialogService dialogService, NotifyIcon notifyIcon)
         {
             ViewModel = this;
             _notifyIcon = notifyIcon;
             _dialogService = dialogService;
 
-            showSettingDialogCommand = new DelegateCommand(() => 
+            showSettingDialogCommand = new DelegateCommand(() =>
             {
                 _dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
             });
-            StartProcessesMonitoringCommand = new DelegateCommand(()=> 
+            StartProcessesMonitoringCommand = new DelegateCommand(() =>
             {
                 _processesMonitoring = new ProcessesMonitoring(_notifyIcon);
                 _processesMonitoring.Start();
@@ -52,7 +45,6 @@ namespace MouseAccelAutoOffMonitor.ViewModels
                 _processesMonitoring.Stop();
                 _processesMonitoring.ExitWait();
                 _notifyIcon.Dispose();
-
             });
         }
     }

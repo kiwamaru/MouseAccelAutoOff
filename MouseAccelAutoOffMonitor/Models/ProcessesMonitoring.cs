@@ -1,8 +1,6 @@
-﻿using MouseAccelAutoOffMonitor.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,35 +18,40 @@ namespace MouseAccelAutoOffMonitor
         private Task _task;
         private ProcessNameListContainer _processNameListContainer;
 
-
         public ProcessesMonitoring(NotifyIcon notifyIcon)
         {
             _notifyIcon = notifyIcon;
             _processNameListContainer = new ProcessNameListContainer();
         }
+
         /// <summary>
         /// 監視スレッド開始
         /// </summary>
         public void Start()
         {
-            _processNameListContainer.LoadFile();
             _processNames = _processNameListContainer.GetProcessNameList();
-            _task = Task.Run(() => ExecuteMonitoringManager());
+            if(_processNames != null && _processNames.Any()) 
+            { 
+                _task = Task.Run(() => ExecuteMonitoringManager());
+            }
         }
+
         /// <summary>
         /// 監視スレッド停止
         /// </summary>
         public void Stop()
         {
-            _cancellationTokenSource.Cancel(true);
+            _cancellationTokenSource?.Cancel(true);
         }
+
         /// <summary>
         /// 監視スレッド停止待ち
         /// </summary>
         public void ExitWait()
         {
-            _task.Wait();
+            _task?.Wait();
         }
+
         /// <summary>
         /// 監視スレッドの起動と例外監視スレッド
         /// </summary>
@@ -59,12 +62,13 @@ namespace MouseAccelAutoOffMonitor
             {
                 await ExecuteMonitoring(_cancellationTokenSource.Token);
             }
-            catch(OperationCanceledException e)
+            catch (OperationCanceledException e)
             {
                 MouseSettingApi.SetMouseEnhancePointerPrecision(true);
             }
             _cancellationTokenSource = null;
         }
+
         /// <summary>
         /// 監視スレッド
         /// </summary>
@@ -76,7 +80,7 @@ namespace MouseAccelAutoOffMonitor
             bool last = current;
             _notifyIcon.ChangeNotifyIcon(current);
 
-            while (true) 
+            while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 if (FindProcessNames(_processNames))
@@ -97,6 +101,7 @@ namespace MouseAccelAutoOffMonitor
             }
             return;
         }
+
         /// <summary>
         /// 監視対象プロセス名が、現在実行中のプロセスにあるかどうかを返す
         /// </summary>
@@ -104,7 +109,7 @@ namespace MouseAccelAutoOffMonitor
         /// <returns></returns>
         public bool FindProcessNames(IReadOnlyCollection<string> pnames)
         {
-            foreach(var pname in pnames)
+            foreach (var pname in pnames)
             {
                 var processList = Process.GetProcessesByName(pname).ToList();
                 if (processList.Any())
