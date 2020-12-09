@@ -9,9 +9,13 @@ using System.Windows.Threading;
 
 namespace MouseAccelAutoOffMonitor.ViewModels
 {
+    /// <summary>
+    /// メインWindow 起動時にすぐ隠される
+    /// </summary>
     public class MainWindowViewModel
     {
         public static MainWindowViewModel ViewModel;
+
         public DelegateCommand showSettingDialogCommand;
         public DelegateCommand StartProcessesMonitoringCommand;
         public DelegateCommand PauseProcessesMonitoringCommand;
@@ -19,7 +23,6 @@ namespace MouseAccelAutoOffMonitor.ViewModels
 
         private NotifyIcon _notifyIcon;
         private IDialogService _dialogService;
-        private Dispatcher _dispather = null;
         private ProcessesMonitoring _processesMonitoring;
 
 
@@ -28,9 +31,11 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             ViewModel = this;
             _notifyIcon = notifyIcon;
             _dialogService = dialogService;
-            _dispather = Dispatcher.CurrentDispatcher;
 
-            showSettingDialogCommand = new DelegateCommand(ShowProcessNameListDialog);
+            showSettingDialogCommand = new DelegateCommand(() => 
+            {
+                _dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
+            });
             StartProcessesMonitoringCommand = new DelegateCommand(()=> 
             {
                 _processesMonitoring = new ProcessesMonitoring(_notifyIcon);
@@ -49,11 +54,6 @@ namespace MouseAccelAutoOffMonitor.ViewModels
                 _notifyIcon.Dispose();
 
             });
-
-        }
-        public void ShowProcessNameListDialog()
-        {
-            _dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
         }
     }
 }

@@ -25,14 +25,22 @@ namespace MouseAccelAutoOffMonitor
             /// <summary>Same as SPIF_SENDCHANGE.</summary>
             SENDWININICHANGE = 0x02
         }
-        public static bool GetMouseAccelaration()
+        /// <summary>
+        /// "ポインターの精度を高める"の設定取得
+        /// </summary>
+        /// <returns></returns>
+        public static bool GetMouseEnhancePointerPrecision()
         {
             int[] mouseParams = new int[3];
             SystemParametersInfoGet(SPI_GETMOUSE, 0, GCHandle.Alloc(mouseParams, GCHandleType.Pinned).AddrOfPinnedObject(), 0);
             return mouseParams[2] == 1;
         }
-
-        public static bool ToggleEnhancePointerPrecision(bool b)
+        /// <summary>
+        /// "ポインターの精度を高める"を設定する
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool SetMouseEnhancePointerPrecision(bool b)
         {
             int[] mouseParams = new int[3];
             // Get the current values.

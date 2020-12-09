@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MouseAccelAutoOffMonitor
 {
+    /// <summary>
+    /// プロセス監視用スレッド
+    /// </summary>
     public class ProcessesMonitoring
     {
         private List<string> _processNames;
@@ -23,22 +26,33 @@ namespace MouseAccelAutoOffMonitor
             _notifyIcon = notifyIcon;
             _processNameListContainer = new ProcessNameListContainer();
         }
+        /// <summary>
+        /// 監視スレッド開始
+        /// </summary>
         public void Start()
         {
             _processNameListContainer.LoadFile();
             _processNames = _processNameListContainer.GetProcessNameList();
-            _task = Task.Run(() => Wait());
+            _task = Task.Run(() => ExecuteMonitoringManager());
         }
+        /// <summary>
+        /// 監視スレッド停止
+        /// </summary>
         public void Stop()
         {
             _cancellationTokenSource.Cancel(true);
         }
-
+        /// <summary>
+        /// 監視スレッド停止待ち
+        /// </summary>
         public void ExitWait()
         {
             _task.Wait();
         }
-        private async void Wait()
+        /// <summary>
+        /// 監視スレッドの起動と例外監視スレッド
+        /// </summary>
+        private async void ExecuteMonitoringManager()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             try
@@ -47,13 +61,18 @@ namespace MouseAccelAutoOffMonitor
             }
             catch(OperationCanceledException e)
             {
-                MouseSettingApi.ToggleEnhancePointerPrecision(true);
+                MouseSettingApi.SetMouseEnhancePointerPrecision(true);
             }
             _cancellationTokenSource = null;
         }
+        /// <summary>
+        /// 監視スレッド
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task ExecuteMonitoring(CancellationToken cancellationToken)
         {
-            bool current = MouseSettingApi.GetMouseAccelaration();
+            bool current = MouseSettingApi.GetMouseEnhancePointerPrecision();
             bool last = current;
             _notifyIcon.ChangeNotifyIcon(current);
 
@@ -70,7 +89,7 @@ namespace MouseAccelAutoOffMonitor
                 }
                 if (last != current)
                 {
-                    MouseSettingApi.ToggleEnhancePointerPrecision(current);
+                    MouseSettingApi.SetMouseEnhancePointerPrecision(current);
                     last = current;
                     _notifyIcon.ChangeNotifyIcon(current);
                 }
@@ -78,6 +97,11 @@ namespace MouseAccelAutoOffMonitor
             }
             return;
         }
+        /// <summary>
+        /// 監視対象プロセス名が、現在実行中のプロセスにあるかどうかを返す
+        /// </summary>
+        /// <param name="pnames">プロセス名リスト</param>
+        /// <returns></returns>
         public bool FindProcessNames(IReadOnlyCollection<string> pnames)
         {
             foreach(var pname in pnames)
