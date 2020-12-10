@@ -6,9 +6,9 @@ using System.Xml.Linq;
 namespace MouseAccelAutoOffMonitor
 {
     /// <summary>
-    /// プロセス名を管理するコンテナ
+    /// プロセス名の設定データファイルを管理するコンテナ
     /// </summary>
-    public class ProcessNameListContainer
+    public class ProcessNameListFile
     {
         private static string filepath = @"MonitoringProcessNames.xml";
 

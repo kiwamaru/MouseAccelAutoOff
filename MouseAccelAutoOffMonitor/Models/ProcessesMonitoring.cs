@@ -16,12 +16,12 @@ namespace MouseAccelAutoOffMonitor.Models
         private NotifyIcon _notifyIcon;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _task;
-        private ProcessNameListContainer _processNameListContainer;
+        private ProcessNameListFile _processNameListContainer;
 
         public ProcessesMonitoring(NotifyIcon notifyIcon)
         {
             _notifyIcon = notifyIcon;
-            _processNameListContainer = new ProcessNameListContainer();
+            _processNameListContainer = new ProcessNameListFile();
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace MouseAccelAutoOffMonitor.Models
         /// <returns></returns>
         public bool FindProcessNames(List<string> pnames)
         {
-            var activepname = UnmanagedAccess.ProcessName.GetActiveProcessFileName();
+            var activepname = UnmanagedAccess.ProcessName.GetActiveProcessFileNameWithoutExtension();
             return pnames.Contains(activepname);
         }
     }

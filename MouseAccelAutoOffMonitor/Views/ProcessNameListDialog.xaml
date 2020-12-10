@@ -17,14 +17,15 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="130"/>
         </Grid.ColumnDefinitions>
         <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ProcessList}"
                  SelectionMode="Single"
                  SelectedItem="{Binding SelectProcessName}"/>
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <Button Content="+" Width="20" Margin="5" HorizontalAlignment="Left" Command="{Binding AddCommand}" ToolTip="追加"/>
-            <Button Content="-" Width="20" Margin="5" HorizontalAlignment="Left" Command="{Binding DelCommand}" ToolTip="削除"/>
+            <Button Content="実行ファイル指定" Width="120" Margin="5,15,5,5" HorizontalAlignment="Left" Command="{Binding AddCommand}" ToolTip="実行ファイルを指定"/>
+            <Button Content="起動中アプリ指定" Width="120" Margin="5" HorizontalAlignment="Left" Command="{Binding AddAppCommand}" ToolTip="起動中のアプリから指定"/>
+            <Button Content="削除" Width="100" Margin="5" HorizontalAlignment="Left" Command="{Binding DelCommand}" ToolTip="削除"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="OK" Width="50" Height="30" Margin="10"  Command="{Binding OKCommand}"/>

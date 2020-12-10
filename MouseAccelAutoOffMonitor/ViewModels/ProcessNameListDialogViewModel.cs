@@ -37,6 +37,8 @@ namespace MouseAccelAutoOffMonitor.ViewModels
         }
 
         public DelegateCommand AddCommand { get; }
+        public DelegateCommand AddAppCommand { get; }
+        
         public DelegateCommand DelCommand { get; }
 
         public DelegateCommand OKCommand { get; }
@@ -44,20 +46,24 @@ namespace MouseAccelAutoOffMonitor.ViewModels
 
         public ObservableCollection<string> ProcessList { get; private set; }
 
-        private ProcessNameListContainer _processNameListContainer;
+        private ProcessNameListFile _processNameListFile;
+        private IDialogService _dialogService;
 
         public event Action<IDialogResult> RequestClose;
 
-        public ProcessNameListDialogViewModel()
+        public ProcessNameListDialogViewModel(IDialogService dialogService)
         {
             ProcessList = new ObservableCollection<string>();
             AddCommand = new DelegateCommand(AddProcessName);
+            AddAppCommand = new DelegateCommand(AddAppProcessName);
+
             DelCommand = new DelegateCommand(DeleteProcessName, () => !String.IsNullOrEmpty(SelectProcessName)).ObservesProperty(() => SelectProcessName);
             OKCommand = new DelegateCommand(OnOK);
-            CancelCommand = new DelegateCommand(DeleteProcessName);
+            CancelCommand = new DelegateCommand(Cancel);
+            _dialogService = dialogService;
 
-            _processNameListContainer = new ProcessNameListContainer();
-            var pnames = _processNameListContainer.GetProcessNameList();
+            _processNameListFile = new ProcessNameListFile();
+            var pnames = _processNameListFile.GetProcessNameList();
             if (pnames != null && pnames.Any())
             {
                 ProcessList.AddRange(pnames);
@@ -72,12 +78,32 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             var fpath = this.ChooseProcessName();
             if (!String.IsNullOrWhiteSpace(fpath))
             {
-                var pname = Path.GetFileName(fpath);
+                var pname = Path.GetFileNameWithoutExtension(fpath);
                 if (!ProcessList.Contains(pname))
                 {
                     ProcessList.Add(pname);
                 }
             }
+        }
+        /// <summary>
+        /// 起動中のアプリリストからプロセス名を追加
+        /// </summary>
+        public void AddAppProcessName()
+        {
+            _dialogService.Show(nameof(Views.RunningAppListDialog), null, ret =>
+            {
+                if (ret.Result == ButtonResult.OK)
+                {
+                    if (ret.Parameters != null && ret.Parameters.ContainsKey("AppName"))
+                    {
+                        var appName = ret.Parameters.GetValue<string>("AppName");
+                        if (!ProcessList.Contains(appName))
+                        {
+                            ProcessList.Add(appName);
+                        }
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -93,11 +119,11 @@ namespace MouseAccelAutoOffMonitor.ViewModels
 
         public void OnOK()
         {
-            _processNameListContainer.SetProcessNameList(ProcessList.ToList());
+            _processNameListFile.SetProcessNameList(ProcessList.ToList());
             this.RequestClose?.Invoke(new Prism.Services.Dialogs.DialogResult(ButtonResult.OK));
         }
 
-        public void Cencel()
+        public void Cancel()
         {
             this.RequestClose?.Invoke(new Prism.Services.Dialogs.DialogResult(ButtonResult.Cancel));
         }

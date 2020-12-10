@@ -106,12 +106,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\BitmapConverter.cs" />
+    <Compile Include="Models\ProcessAppNames.cs" />
     <Compile Include="Models\UnmanagedAccess\ProcessName.cs" />
+    <Compile Include="ViewModels\RunningAppListDialogViewModel.cs" />
+    <Compile Include="Views\RunningAppListDialog.xaml.cs">
+      <DependentUpon>RunningAppListDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\StartUpRegistration.cs" />
+    <Page Include="Views\RunningAppListDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,7 +134,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ProcessNameListContainer.cs" />
+    <Compile Include="Models\ProcessNameListFile.cs" />
     <Compile Include="Models\UnmanagedAccess\MouseSetting.cs" />
     <Compile Include="NotifyIcon.cs">
       <SubType>Component</SubType>

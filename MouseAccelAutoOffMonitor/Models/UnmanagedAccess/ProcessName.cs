@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -24,12 +25,16 @@ namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
         private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
 
         #endregion Win32API Methods
+        public static string GetActiveProcessFileNameWithoutExtension()
+        {
+            return Path.GetFileNameWithoutExtension(GetActiveProcessFileName());
+        }
 
         /// <summary>
         /// プロセス名の取得
         /// </summary>
         /// <returns></returns>
-        public static string GetActiveProcessFileName()
+        private static string GetActiveProcessFileName()
         {
             try
             {

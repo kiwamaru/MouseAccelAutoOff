@@ -30,7 +30,8 @@ namespace MouseAccelAutoOffMonitor
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterDialog<Views.ProcessNameListDialog,ViewModels.ProcessNameListDialogViewModel>();
+            containerRegistry.RegisterDialog<Views.ProcessNameListDialog, ViewModels.ProcessNameListDialogViewModel>();
+            containerRegistry.RegisterDialog<Views.RunningAppListDialog, ViewModels.RunningAppListDialogViewModel>();
             containerRegistry.Register<NotifyIcon>();
         }
 
