@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MouseAccelAutoOffMonitor.Models;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MouseAccelAutoOffMonitor
+namespace MouseAccelAutoOffMonitor.Models
 {
     /// <summary>
     /// プロセス監視用スレッド
@@ -30,8 +30,8 @@ namespace MouseAccelAutoOffMonitor
         public void Start()
         {
             _processNames = _processNameListContainer.GetProcessNameList();
-            if(_processNames != null && _processNames.Any()) 
-            { 
+            if (_processNames != null && _processNames.Any())
+            {
                 _task = Task.Run(() => ExecuteMonitoringManager());
             }
         }
@@ -64,7 +64,7 @@ namespace MouseAccelAutoOffMonitor
             }
             catch (OperationCanceledException e)
             {
-                MouseSettingApi.SetMouseEnhancePointerPrecision(true);
+                UnmanagedAccess.MouseSetting.SetMouseEnhancePointerPrecision(true);
             }
             _cancellationTokenSource = null;
         }
@@ -76,7 +76,7 @@ namespace MouseAccelAutoOffMonitor
         /// <returns></returns>
         private async Task ExecuteMonitoring(CancellationToken cancellationToken)
         {
-            bool current = MouseSettingApi.GetMouseEnhancePointerPrecision();
+            bool current = UnmanagedAccess.MouseSetting.GetMouseEnhancePointerPrecision();
             bool last = current;
             _notifyIcon.ChangeNotifyIcon(current);
 
@@ -93,7 +93,7 @@ namespace MouseAccelAutoOffMonitor
                 }
                 if (last != current)
                 {
-                    MouseSettingApi.SetMouseEnhancePointerPrecision(current);
+                    UnmanagedAccess.MouseSetting.SetMouseEnhancePointerPrecision(current);
                     last = current;
                     _notifyIcon.ChangeNotifyIcon(current);
                 }
@@ -107,17 +107,10 @@ namespace MouseAccelAutoOffMonitor
         /// </summary>
         /// <param name="pnames">プロセス名リスト</param>
         /// <returns></returns>
-        public bool FindProcessNames(IReadOnlyCollection<string> pnames)
+        public bool FindProcessNames(List<string> pnames)
         {
-            foreach (var pname in pnames)
-            {
-                var processList = Process.GetProcessesByName(pname).ToList();
-                if (processList.Any())
-                {
-                    return true;
-                }
-            }
-            return false;
+            var activepname = UnmanagedAccess.ProcessName.GetActiveProcessFileName();
+            return pnames.Contains(activepname);
         }
     }
 }

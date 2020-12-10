@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace MouseAccelAutoOffMonitor
+namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
 {
-    public class MouseSettingApi
+    public class MouseSetting
     {
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo", SetLastError = true)]
         public static extern bool SystemParametersInfoGet(uint action, uint param, IntPtr vparam, SPIF fWinIni);

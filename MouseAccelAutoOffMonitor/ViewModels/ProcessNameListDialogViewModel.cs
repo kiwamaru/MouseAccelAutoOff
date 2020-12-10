@@ -72,7 +72,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             var fpath = this.ChooseProcessName();
             if (!String.IsNullOrWhiteSpace(fpath))
             {
-                var pname = Path.GetFileNameWithoutExtension(fpath);
+                var pname = Path.GetFileName(fpath);
                 if (!ProcessList.Contains(pname))
                 {
                     ProcessList.Add(pname);

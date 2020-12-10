@@ -17,7 +17,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
 
         private NotifyIcon _notifyIcon;
         private IDialogService _dialogService;
-        private ProcessesMonitoring _processesMonitoring;
+        private Models.ProcessesMonitoring _processesMonitoring;
 
         public MainWindowViewModel(IDialogService dialogService, NotifyIcon notifyIcon)
         {
@@ -31,7 +31,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             });
             StartProcessesMonitoringCommand = new DelegateCommand(() =>
             {
-                _processesMonitoring = new ProcessesMonitoring(_notifyIcon);
+                _processesMonitoring = new Models.ProcessesMonitoring(_notifyIcon);
                 _processesMonitoring.Start();
             });
 
