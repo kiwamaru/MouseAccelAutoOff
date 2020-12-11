@@ -6,6 +6,8 @@ namespace MouseAccelAutoOffMonitor.Models
     {
         public static BitmapSource ConvBitmapSource(System.Drawing.Bitmap bitmap)
         {
+            if (bitmap == null) return null;
+
             // MemoryStreamを利用した変換処理
             using (var ms = new System.IO.MemoryStream())
             {

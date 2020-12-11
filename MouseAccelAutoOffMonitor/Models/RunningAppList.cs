@@ -47,11 +47,20 @@ namespace MouseAccelAutoOffMonitor.Models
                 if (!AppList.Select(x=>x.AppName).Contains(app.ProcessName)) 
                 {
                     string[] delimiter = { "-" };
-                    var bitmap = Icon.ExtractAssociatedIcon(app.MainModule.FileName).ToBitmap();
+                    Bitmap bitmap = null;
+                    try 
+                    {
+                        bitmap = Icon.ExtractAssociatedIcon(app.MainModule.FileName).ToBitmap();
+                    }
+                    catch(System.ComponentModel.Win32Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                    }
                     var rawWinTitle = app.MainWindowTitle;
                     var splitedTitles = rawWinTitle.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
                     var winTitle = "";
-                    if (splitedTitles.Count() > 0) { 
+                    if (splitedTitles.Count() > 0) 
+                    { 
                         winTitle = splitedTitles[splitedTitles.Count() - 1].Trim();
                     }
                     if (String.IsNullOrWhiteSpace(winTitle)) winTitle = app.ProcessName;
