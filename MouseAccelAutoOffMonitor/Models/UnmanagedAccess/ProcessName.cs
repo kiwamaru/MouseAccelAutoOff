@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -43,19 +44,8 @@ namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
             try
             {
                 var handle = (IntPtr)GetWindowThreadProcessId(GetForegroundWindow(), out var processid);
-                if (handle != IntPtr.Zero)
-                {
-                    var hnd = OpenProcess(0x0400 | 0x0010, false, processid);
-                    if (hnd != null)
-                    {
-                        var buffer = new StringBuilder(255);
-                        GetModuleBaseName(hnd, IntPtr.Zero, buffer, (uint)buffer.Capacity);
-                        CloseHandle(hnd);
-
-                        return buffer.ToString();
-                    }
-                }
-                return null;
+                var process = Process.GetProcessById((int)processid);
+                return process.ProcessName;
             }
             catch (System.ComponentModel.Win32Exception e)
             {
