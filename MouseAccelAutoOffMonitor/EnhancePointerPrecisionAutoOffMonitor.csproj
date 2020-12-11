@@ -88,7 +88,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\BitmapConverter.cs" />
-    <Compile Include="Models\ProcessAppNames.cs" />
+    <Compile Include="Models\RunningAppList.cs" />
     <Compile Include="Models\UnmanagedAccess\ProcessName.cs" />
     <Compile Include="ViewModels\RunningAppListDialogViewModel.cs" />
     <Compile Include="Views\RunningAppListDialog.xaml.cs">

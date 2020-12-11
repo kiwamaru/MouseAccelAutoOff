@@ -24,6 +24,10 @@ namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
         [DllImport("psapi.dll", CharSet = CharSet.Ansi)]
         private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
         #endregion Win32API Methods
         public static string GetActiveProcessFileNameWithoutExtension()
         {
