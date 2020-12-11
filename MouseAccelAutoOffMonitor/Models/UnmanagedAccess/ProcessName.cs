@@ -23,7 +23,7 @@ namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
         private static extern bool CloseHandle(IntPtr handle);
 
         [DllImport("psapi.dll", CharSet = CharSet.Ansi)]
-        private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, [MarshalAs(UnmanagedType.LPStr), Out] StringBuilder lpBaseName, uint nSize);
+        private static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -44,8 +44,18 @@ namespace MouseAccelAutoOffMonitor.Models.UnmanagedAccess
             try
             {
                 var handle = (IntPtr)GetWindowThreadProcessId(GetForegroundWindow(), out var processid);
-                var process = Process.GetProcessById((int)processid);
-                return process.ProcessName;
+                if (handle != IntPtr.Zero)
+                {
+                    var hnd = OpenProcess(0x0400 | 0x0010, false, processid);
+                    if (hnd != null)
+                    {
+                        var buffer = new StringBuilder(255);
+                        GetModuleFileNameEx(hnd, IntPtr.Zero, buffer, buffer.Capacity);
+                        CloseHandle(hnd);
+                        return buffer.ToString();
+                    }
+                }
+                return null;
             }
             catch (System.ComponentModel.Win32Exception e)
             {
