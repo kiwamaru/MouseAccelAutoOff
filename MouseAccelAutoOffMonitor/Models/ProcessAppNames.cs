@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 namespace MouseAccelAutoOffMonitor.Models
@@ -41,8 +43,11 @@ namespace MouseAccelAutoOffMonitor.Models
             {
                 if (!AppList.Select(x=>x.AppName).Contains(app.ProcessName)) 
                 {
-                    var bitmap = Icon.ExtractAssociatedIcon(app.MainModule.FileName).ToBitmap();
-                    AppList.Add(new ProcessAppNameItem(i++, app.ProcessName, BitmapConverter.ConvBitmapSource(bitmap)));
+                    using (Icon ico = Icon.ExtractAssociatedIcon(app.MainModule.FileName))
+                    {
+                        var Source = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                        AppList.Add(new ProcessAppNameItem(i++, app.ProcessName, Source));
+                    }
                 }
             }
             return true;
