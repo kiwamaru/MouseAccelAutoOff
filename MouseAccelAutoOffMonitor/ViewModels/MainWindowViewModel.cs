@@ -1,5 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Services.Dialogs;
+using System.Linq;
+using System.Windows;
 
 namespace MouseAccelAutoOffMonitor.ViewModels
 {
@@ -27,7 +29,11 @@ namespace MouseAccelAutoOffMonitor.ViewModels
 
             showSettingDialogCommand = new DelegateCommand(() =>
             {
-                _dialogService.Show(nameof(Views.ProcessNameListDialog), null, null);
+                //ダイアログの多重起動防止
+                if(null == Application.Current.Windows.OfType<DialogWindow>().FirstOrDefault(x=>x.Content.GetType() == typeof(Views.ProcessNameListDialog)))
+                { 
+                    _dialogService.ShowDialog(nameof(Views.ProcessNameListDialog), null, null);
+                }
             });
             StartProcessesMonitoringCommand = new DelegateCommand(() =>
             {

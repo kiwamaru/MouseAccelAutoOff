@@ -24,12 +24,12 @@ namespace MouseAccelAutoOffMonitor.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        private ProcessAppNameItem _selectAppName;
+        private RunningAppItem _selectAppName;
 
         /// <summary>
         /// 選択中のプロセス名
         /// </summary>
-        public ProcessAppNameItem SelectAppName
+        public RunningAppItem SelectAppName
         {
             get { return this._selectAppName; }
             set
@@ -41,19 +41,19 @@ namespace MouseAccelAutoOffMonitor.ViewModels
         public DelegateCommand OKCommand { get; }
         public DelegateCommand CancelCommand { get; }
 
-        public ObservableCollection<ProcessAppNameItem> AppList { get; private set; }
+        public ObservableCollection<RunningAppItem> AppList { get; private set; }
 
         public event Action<IDialogResult> RequestClose;
 
-        private ProcessAppNamesContainer _processAppNamesContainer;
+        private RunningAppList _processAppNamesContainer;
 
         public RunningAppListDialogViewModel()
         {
-            AppList = new ObservableCollection<ProcessAppNameItem>();
+            AppList = new ObservableCollection<RunningAppItem>();
             OKCommand = new DelegateCommand(OnOK);
             CancelCommand = new DelegateCommand(Cancel);
 
-            _processAppNamesContainer = new ProcessAppNamesContainer();
+            _processAppNamesContainer = new RunningAppList();
 
             _processAppNamesContainer.GetAppProcesses();
             AppList.AddRange(_processAppNamesContainer.AppList);

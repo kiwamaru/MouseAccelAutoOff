@@ -90,7 +90,7 @@ namespace MouseAccelAutoOffMonitor.ViewModels
         /// </summary>
         public void AddAppProcessName()
         {
-            _dialogService.Show(nameof(Views.RunningAppListDialog), null, ret =>
+            _dialogService.ShowDialog(nameof(Views.RunningAppListDialog), null, ret =>
             {
                 if (ret.Result == ButtonResult.OK)
                 {
